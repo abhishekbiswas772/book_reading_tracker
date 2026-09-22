@@ -1,0 +1,367 @@
+:root {
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-border: #e0e2e7;
+  --color-text: #1f2430;
+  --color-text-muted: #6b7280;
+  --color-primary: #3b5bdb;
+  --color-primary-hover: #2f4bc0;
+  --color-danger: #d64545;
+  --color-danger-bg: #fdecec;
+  --color-success-bg: #eef6ee;
+
+  --status-to-read-bg: #e7eaf6;
+  --status-to-read-text: #3b4c9e;
+  --status-reading-bg: #fff3d6;
+  --status-reading-text: #966313;
+  --status-done-bg: #e1f5e6;
+  --status-done-text: #237a3f;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.app-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 1.5rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.banner {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.banner-error {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid #f3c6c6;
+}
+
+.counts-bar {
+  display: flex;
+  gap: 1rem;
+}
+
+.count-card {
+  flex: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.9rem;
+  text-align: center;
+}
+
+.count-value {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.count-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.form-row {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-row label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.form-row input,
+.form-row select {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  min-height: 1em;
+}
+
+.form-actions {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.form-message {
+  font-size: 0.85rem;
+  color: var(--color-danger);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--color-primary);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+
+button:hover {
+  background: var(--color-primary-hover);
+}
+
+button.secondary,
+#edit-cancel {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+button.secondary:hover,
+#edit-cancel:hover {
+  background: var(--color-bg);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.list-header h2 {
+  margin: 0;
+}
+
+.list-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.search-box {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+.search-box:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.filter-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-control label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.filter-control select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.book-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.book-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.book-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.book-author {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  margin-top: 0.15rem;
+}
+
+.book-dates {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  margin-top: 0.4rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 0.4rem;
+}
+
+.status-badge[data-status="to-read"] {
+  background: var(--status-to-read-bg);
+  color: var(--status-to-read-text);
+}
+
+.status-badge[data-status="reading"] {
+  background: var(--status-reading-bg);
+  color: var(--status-reading-text);
+}
+
+.status-badge[data-status="done"] {
+  background: var(--status-done-bg);
+  color: var(--status-done-text);
+}
+
+.book-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.book-actions button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+.book-actions .delete-btn {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.book-actions .delete-btn:hover {
+  background: #f9d9d9;
+}
+
+.book-actions .edit-btn {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.book-actions .edit-btn:hover {
+  background: var(--color-bg);
+}
+
+.empty-state {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 10;
+}
+
+/* Author CSS beats the browser's default [hidden]{display:none} rule, so
+   the unconditional `display: flex` above would keep this visible even
+   with the `hidden` attribute set unless it's overridden explicitly here. */
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--color-surface);
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .counts-bar {
+    flex-direction: column;
+  }
+
+  .book-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

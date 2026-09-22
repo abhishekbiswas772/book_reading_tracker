@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading List Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Reading List Tracker</h1>
+  </header>
+
+  <main class="container">
+    <section id="global-error" class="banner banner-error" hidden></section>
+
+    <section class="counts-bar" aria-label="Status counts">
+      <div class="count-card" data-status="to-read">
+        <span class="count-value" id="count-to-read">0</span>
+        <span class="count-label">To Read</span>
+      </div>
+      <div class="count-card" data-status="reading">
+        <span class="count-value" id="count-reading">0</span>
+        <span class="count-label">Reading</span>
+      </div>
+      <div class="count-card" data-status="done">
+        <span class="count-value" id="count-done">0</span>
+        <span class="count-label">Done</span>
+      </div>
+    </section>
+
+    <section class="panel add-book-panel">
+      <h2>Add a Book</h2>
+      <form id="add-book-form" novalidate>
+        <div class="form-row">
+          <label for="add-title">Title</label>
+          <input type="text" id="add-title" name="title" placeholder="Book title" />
+          <span class="field-error" id="add-title-error"></span>
+        </div>
+        <div class="form-row">
+          <label for="add-author">Author</label>
+          <input type="text" id="add-author" name="author" placeholder="Author (optional)" />
+          <span class="field-error" id="add-author-error"></span>
+        </div>
+        <div class="form-row">
+          <label for="add-status">Status</label>
+          <select id="add-status" name="status">
+            <option value="to-read" selected>To Read</option>
+            <option value="reading">Reading</option>
+            <option value="done">Done</option>
+          </select>
+          <span class="field-error" id="add-status-error"></span>
+        </div>
+        <div class="form-row form-actions">
+          <button type="submit">Add Book</button>
+          <span class="form-message" id="add-form-message"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel list-panel">
+      <div class="list-header">
+        <h2>Your Books</h2>
+        <div class="list-controls">
+          <input
+            type="search"
+            id="search-box"
+            class="search-box"
+            placeholder="Search by title or author…"
+          />
+          <div class="filter-control">
+            <label for="status-filter">Filter</label>
+            <select id="status-filter">
+              <option value="">All</option>
+              <option value="to-read">To Read</option>
+              <option value="reading">Reading</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="book-list" class="book-list">
+        <p class="empty-state" id="empty-state" hidden>No books yet — add one above.</p>
+      </div>
+      <p class="empty-state" id="no-search-results" hidden>No books match your search.</p>
+    </section>
+  </main>
+
+  <div id="edit-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+      <h2 id="edit-modal-title">Edit Book</h2>
+      <form id="edit-book-form" novalidate>
+        <input type="hidden" id="edit-id" />
+        <div class="form-row">
+          <label for="edit-title">Title</label>
+          <input type="text" id="edit-title" name="title" />
+          <span class="field-error" id="edit-title-error"></span>
+        </div>
+        <div class="form-row">
+          <label for="edit-author">Author</label>
+          <input type="text" id="edit-author" name="author" />
+          <span class="field-error" id="edit-author-error"></span>
+        </div>
+        <div class="form-row">
+          <label for="edit-status">Status</label>
+          <select id="edit-status" name="status">
+            <option value="to-read">To Read</option>
+            <option value="reading">Reading</option>
+            <option value="done">Done</option>
+          </select>
+          <span class="field-error" id="edit-status-error"></span>
+        </div>
+        <div class="form-row form-actions">
+          <button type="submit">Save Changes</button>
+          <button type="button" id="edit-cancel">Cancel</button>
+          <span class="form-message" id="edit-form-message"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -9,6 +9,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from app.config.config import get_settings
 from app.db.config import DatabaseHandler
 from app.routes.book_mutation_routes import book_mutation_router
@@ -70,6 +71,8 @@ async def validation_exception_handler(
 app.include_router(book_router.router)
 app.include_router(book_query_router.router)
 app.include_router(book_mutation_router.router)
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 
 if __name__ == "__main__":
