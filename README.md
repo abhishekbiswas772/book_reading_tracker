@@ -62,7 +62,16 @@ app/
     book_routes.py            # BookRouter — class-based POST /book route
     book_query_routes.py       # BookQueryRouter — GET /book, GET /book/status-counts
     book_mutation_routes.py    # BookMutationRouter — PATCH/DELETE /book/{book_id}
+static/
+  index.html                  # single-page UI (list, add form, status filter, search, edit modal)
+  style.css
+  app.js                       # calls the API above via fetch()
 ```
+
+The frontend is plain HTML/CSS/JS — no build step, no framework — served
+directly by FastAPI via `StaticFiles` mounted at `/` in `main.py` (mounted
+*after* the API routers, so `/book` etc. still resolve to the API and
+everything else falls through to the static files).
 
 Each slice (create / query / mutation) is deliberately split into its own
 schema/service/route module rather than growing the original `book_*.py`
@@ -100,6 +109,19 @@ On startup the SQLite tables are created automatically (`reading_list.db` in
 the project root) — no separate migration step needed for this slice. There
 is no migration tooling, so if the model schema changes (new column, new
 constraint), delete `reading_list.db` and let it regenerate.
+
+## Running tests
+
+The test suite spins up a fresh in-memory SQLite DB per test (via a
+`get_db_session` dependency override), so it never touches the real
+`reading_list.db`.
+
+```bash
+.venv\Scripts\python.exe -m pytest --cov=app --cov=main --cov-report=term-missing --cov-report=html
+```
+
+Coverage output lands in `htmlcov/index.html`; both it and `.coverage` are
+gitignored.
 
 ## API docs
 
@@ -249,3 +271,33 @@ curl -X DELETE http://localhost:8000/book/<id>
 - Import `Book` / `BookStatus` from `app.db.models` for the ORM model and status enum.
 - Import `BookResponse` from `app.schemas.book` to reuse the same response shape.
 - Register any new router in `main.py` the same way the existing routers are included.
+
+## Deploying to Render.com
+
+A `Dockerfile` at the project root builds a single-container image:
+
+```bash
+docker build -t reading-list-tracker .
+docker run -p 8000:8000 reading-list-tracker
+```
+
+On Render: create a new **Web Service**, point it at this repo, and pick
+**Docker** as the environment — Render detects the `Dockerfile`
+automatically, so no build/start command needs to be set manually. Render
+injects its own `PORT` env var at runtime; the image's `CMD` reads it
+(`--port ${PORT:-8000}`), so no extra configuration is required for the app
+to bind to the right port and become reachable at the URL Render assigns.
+
+**Do not commit `.env`.** It's excluded from the image via `.dockerignore`.
+Set any config overrides (e.g. `APP_NAME`) as environment variables in
+Render's dashboard instead — `Settings` (see `app/config/config.py`) reads
+from the environment either way.
+
+**SQLite caveat:** the default `DATABASE_URL` writes to a file inside the
+container (`./reading_list.db`). Render's filesystem for a Web Service is
+ephemeral by default — data is lost on redeploy/restart unless you attach a
+persistent Disk (Render feature) and point `DATABASE_URL` at a path on it,
+or swap in a hosted DB. Fine for demos/evaluation as-is.
+
+There is no `docker-compose.yml` on purpose — Render.com builds and runs a
+single `Dockerfile` directly; Compose isn't applicable there.

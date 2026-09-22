@@ -1,0 +1,31 @@
+# Secrets / local-only config — must never be baked into the image.
+.env
+.env.*
+
+# Local virtualenv and Python cruft
+.venv
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local SQLite database (the container starts with a fresh one)
+*.db
+*.sqlite3
+*.sqlite
+
+# VCS / editor / IDE
+.git
+.gitignore
+.vscode
+.idea
+
+# Tests / coverage artifacts
+.pytest_cache
+htmlcov
+.coverage
+coverage.xml
+
+# Docs (not needed at runtime, keeps the image lean)
+README.md
+CLAUDE.md

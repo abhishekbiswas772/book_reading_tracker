@@ -104,6 +104,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
 .venv
 env/
 venv/
@@ -139,8 +140,10 @@ cython_debug/
 .vscode/
 .idea/
 
-# Project-specific SQLite database files
+# Project-specific SQLite database files (including journal/WAL sidecars)
 *.db
+*.db-journal
+*.db-wal
+*.db-shm
 *.sqlite3
 *.sqlite
-.env

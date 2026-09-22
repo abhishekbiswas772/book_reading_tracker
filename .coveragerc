@@ -1,0 +1,14 @@
+[run]
+source =
+    app
+    main.py
+omit =
+    tests/*
+# SQLAlchemy's async engine bridges to sync code via greenlet (greenlet_spawn);
+# without this, coverage silently misses every line executed inside that bridge
+# (i.e. most of the service/db layer), reporting false gaps.
+concurrency = greenlet
+
+[report]
+exclude_lines =
+    pragma: no cover
